@@ -1,0 +1,15 @@
+
+#############
+Ejercicio 1 :
+#############
+
+Undefined en el texto explicativo.  
+No hay explicacion de las diferentes opciones al crear modelo 
+
+############
+Ejercicio 2 :
+#############
+Error ortografico,en la instruccion remote hook 
+Documentacion en linea, otros tutoriales similares parecen usar documentacion local
+color de los parentesis hacen q no se vean 
+Pareciera que no verifica la propiedad correctamente? 
