@@ -11,6 +11,10 @@
       "type": "date",
       "required": true
     },
+    "fullName": {
+      "type": "string",
+      "required": true
+    },
     "test": {
       "type": "boolean",
       "required": true,
@@ -18,7 +22,26 @@
     }
   },
   "validations": [],
-  "relations": {},
-  "acls": [],
+  "relations": {
+    "Tweets": {
+      "type": "hasMany",
+      "model": "Tweet",
+      "foreignKey": ""
+    },
+    "Favorites": {
+      "type": "hasAndBelongsToMany",
+      "model": "Tweet",
+      "foreignKey": ""
+    }
+  },
+  "acls": [
+    {
+      "accessType": "EXECUTE",
+      "principalType": "ROLE",
+      "principalId": "$everyone",
+      "permission": "ALLOW",
+      "property": "greet"
+    }
+  ],
   "methods": {}
 }

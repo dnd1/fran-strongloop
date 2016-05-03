@@ -1,30 +1,39 @@
 module.exports = function(DndUser) {
 
     DndUser.observe('before save', function(ctx, next) {
-      if (ctx.isNewInstance) {
-        //console.log(ctx);
-        // console.log(ctx.instance.createdAt);
-        // console.log(Date.now());
-        ctx.instance.createdAtt = Date.now();
-      } else {
-        console.log("Lista");
+        if (ctx.isNewInstance) {
+            ctx.instance.createdAt = Date.now();
+        }
+      next();
+    });
+
+    DndUser.afterRemote('findById', function (ctx, user, next) {
+        if(ctx.result) {
+            delete ctx.result.password;
+            delete ctx.result.password.fullName;
       }
       next();
     });
 
-    DndUser.afterRemote('**', function (ctx, user, next) {
-      //console.log(" nNO entreo");
-      //console.log(ctx.result);
-      if(ctx.result) {
-        //console.log("entreo");
-        if(Array.isArray(ctx.result)) {
-          ctx.result.forEach(function (result) {
-            delete result.password;
-          });
-        } else {
-          delete ctx.result.password;
-        }
-      }
-      //console.log(ctx.result);
-    });
+    DndUser.greet = function(idd,cb){
+        //console.log("Implement");
+        res = ""
+        DndUser.findById(idd).then(
+            function(user){
+            //console.log("AQUI",user);
+            res = user.fullName.toLowerCase().replace(" ","-") +"-"+String(idd);  
+            cb(null,res);
+            }
+        ).catch(cb);
+
+        console.log(res);
+
+    }
+
+    DndUser.remoteMethod('greet',
+    {
+        accepts: {arg:'id', type:'number'},
+        returns: {arg:'nickname', type:'string'},
+        http: {path: '/greet', verb: 'get'}
+    }); 
 };
